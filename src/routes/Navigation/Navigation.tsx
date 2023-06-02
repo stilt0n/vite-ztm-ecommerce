@@ -10,7 +10,10 @@ export const Navigation = () => (
       </Link>
       <div className={styles['nav-links-container']}>
         <Link className={styles['nav-link']} to="/shop">
-          Shop
+          SHOP
+        </Link>
+        <Link className={styles['nav-link']} to="/sign-in">
+          SIGN IN
         </Link>
       </div>
     </div>
