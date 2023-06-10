@@ -12,7 +12,7 @@ export const Navigation = () => (
         <Link className={styles['nav-link']} to="/shop">
           SHOP
         </Link>
-        <Link className={styles['nav-link']} to="/sign-in">
+        <Link className={styles['nav-link']} to="/auth">
           SIGN IN
         </Link>
       </div>
