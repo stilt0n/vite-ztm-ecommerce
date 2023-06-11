@@ -25,6 +25,8 @@
   &.google-sign-in {
     background-color: #4285f4;
     color: white;
+    /* Temporary style fix. The problem is deeper than this */
+    flex-shrink: 0;
 
     &:hover {
       background-color: #357ae8;
