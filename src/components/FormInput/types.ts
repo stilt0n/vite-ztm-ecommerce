@@ -9,4 +9,5 @@ export interface FormInputProps {
   labelClassName?: string;
   inputClassName?: string;
   name?: string;
+  minLength?: number;
 }

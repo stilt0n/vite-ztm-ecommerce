@@ -1,10 +1,7 @@
 import { ChangeEvent, FormEventHandler, useState } from 'react';
 import { FormInput } from '../FormInput';
 import { Button } from '../Button';
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from '../../utils/firebase';
+import { createAuthUserWithEmailAndPassword } from '../../utils/firebase';
 import { getErrorCode, getErrorMessage } from '../../utils/errorHandling';
 import styles from './SignUpForm.module.scss';
 
@@ -30,11 +27,7 @@ export const SignUpForm = () => {
       return;
     }
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      createUserDocumentFromAuth({ ...user, displayName });
+      await createAuthUserWithEmailAndPassword(email, password);
       setFormFields(defaultFormFields);
     } catch (e) {
       if (getErrorCode(e) === 'auth/email-already-in-user') {
@@ -69,6 +62,7 @@ export const SignUpForm = () => {
           value={password}
           onChange={onInputChange}
           required
+          minLength={6}
         />
         <FormInput
           label="Confirm Password"
@@ -76,6 +70,7 @@ export const SignUpForm = () => {
           value={confirmPassword}
           onChange={onInputChange}
           required
+          minLength={6}
         />
         <Button type="submit">Sign Up</Button>
       </form>

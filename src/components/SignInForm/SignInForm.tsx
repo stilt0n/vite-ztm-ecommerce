@@ -6,13 +6,8 @@ import {
 } from '../../utils/firebase';
 import { Button } from '../Button';
 import { FormInput } from '../FormInput';
-import { getErrorCode, getErrorMessage } from 'src/utils/errorHandling';
+import { getErrorCode, getErrorMessage } from '../../utils/errorHandling';
 import styles from './SignInForm.module.scss';
-
-const onGoogleSignIn = async () => {
-  const { user } = await signInWithGooglePopup();
-  createUserDocumentFromAuth(user);
-};
 
 const defaultFormFields = {
   email: '',
@@ -32,7 +27,6 @@ export const SignInForm = () => {
     event.preventDefault();
     try {
       await signInVanilla(email, password);
-      // do something with user?
       setFormFields(defaultFormFields);
     } catch (e) {
       if (
@@ -44,6 +38,7 @@ export const SignInForm = () => {
       console.error(getErrorMessage(e));
     }
   };
+
   return (
     <div className={styles['sign-in-container']}>
       <h2>I already have an account</h2>
@@ -65,7 +60,11 @@ export const SignInForm = () => {
         />
         <div className={styles['buttons-container']}>
           <Button type="submit">Sign In</Button>
-          <Button type="button" buttonType="google" onClick={onGoogleSignIn}>
+          <Button
+            type="button"
+            buttonType="google"
+            onClick={signInWithGooglePopup}
+          >
             Sign In With Google
           </Button>
         </div>
