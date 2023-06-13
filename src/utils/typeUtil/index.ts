@@ -8,3 +8,10 @@ export const noop = () => {};
 export interface ChildProps {
   children?: ReactNode;
 }
+
+export interface InventoryItem {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+}
