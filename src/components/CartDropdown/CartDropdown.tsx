@@ -1,5 +1,6 @@
 import styles from './CartDropdown.module.scss';
 import { Button } from '../Button';
+import { CartItem } from '../CartItem';
 import { CartDropdownProps } from './types';
 
 export const CartDropdown = (props: CartDropdownProps) => {

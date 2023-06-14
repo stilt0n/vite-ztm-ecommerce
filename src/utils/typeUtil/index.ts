@@ -15,3 +15,7 @@ export interface InventoryItem {
   imageUrl: string;
   price: number;
 }
+
+export interface InventoryItemWithQuantity extends InventoryItem {
+  quantity: number;
+}
