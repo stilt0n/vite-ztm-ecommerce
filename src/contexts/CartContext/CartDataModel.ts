@@ -47,6 +47,17 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
     return false;
   }
 
+  public incrementItem(id: number) {
+    if (this.cartData[id]) {
+      this.cartData[id].quantity += 1;
+      this.cartItemCount += 1;
+      return;
+    }
+    throw new Error(
+      'Cannot increment item: it does not exist. Did you mean to use addItem instead?'
+    );
+  }
+
   public *[Symbol.iterator]() {
     let counter = 0;
     while (counter < this.ids.length) {

@@ -10,6 +10,8 @@ export interface CartContextState {
   setIsCartOpen: Dispatch<SetStateAction<boolean>>;
   cartItems: InventoryItemWithQuantity[];
   addItemToCart: (item: InventoryItem) => void;
+  incrementItemInCart: (id: number) => void;
+  decrementItemInCart: (id: number) => void;
   removeItemFromCart: (id: number) => void;
   itemCount: number;
 }

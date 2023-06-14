@@ -4,7 +4,6 @@ import {
   InventoryItem,
   InventoryItemWithQuantity,
   noop,
-  noopDispatch,
 } from '../../utils/typeUtil';
 import { CartContextState } from './types';
 import { CartDataModel } from './CartDataModel';
@@ -16,7 +15,9 @@ export const CartContext = createContext<CartContextState>({
   setIsCartOpen: noop,
   cartItems: [],
   addItemToCart: noop,
-  removeItemFromCart: noopDispatch,
+  incrementItemInCart: noop,
+  decrementItemInCart: noop,
+  removeItemFromCart: noop,
   itemCount: 0,
 });
 
@@ -37,12 +38,26 @@ export const CartProvider = ({ children }: ChildProps) => {
     setItemCount(cart.getItemCount());
   };
 
+  const decrementItemInCart = (id: number) => {
+    cart.decrementItem(id);
+    setCartItems(Array.from(cart));
+    setItemCount(cart.getItemCount());
+  };
+
+  const incrementItemInCart = (id: number) => {
+    cart.incrementItem(id);
+    setCartItems(Array.from(cart));
+    setItemCount(cart.getItemCount());
+  };
+
   const value = {
     isCartOpen,
     setIsCartOpen,
     cartItems,
     addItemToCart,
     removeItemFromCart,
+    incrementItemInCart,
+    decrementItemInCart,
     itemCount,
   };
 
