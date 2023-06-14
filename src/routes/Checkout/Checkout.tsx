@@ -3,19 +3,22 @@ import { useCartContext } from '../../contexts/CartContext';
 import styles from './Checkout.module.scss';
 
 const HeaderRow = () => (
-  <div className={styles['header-row']}>
+  <div className={styles['checkout-header']}>
     {['Product', 'Description', 'Quantity', 'Price', 'Remove'].map(
       (rowTitle) => (
-        <h3>{rowTitle}</h3>
+        <div className={styles['header-block']}>
+          <span>{rowTitle}</span>
+        </div>
       )
     )}
   </div>
 );
 
 const FooterRow = ({ subtotal = 0 }) => (
-  <div className={styles['footer-row']}>
-    <span style={{ textAlign: 'center' }}>{`$${subtotal.toFixed(2)}`}</span>
-  </div>
+  <span
+    className={styles['total']}
+    style={{ textAlign: 'center' }}
+  >{`Total: $${subtotal.toFixed(2)}`}</span>
 );
 
 export const Checkout = () => {

@@ -8,19 +8,24 @@ export const CheckoutRow = ({ onItemChange, item }: CheckoutRowProps) => {
   };
   const onRemove = () => onItemChange('remove');
   return (
-    <div
-      className={styles['row-container']}
-      style={{ display: 'flex', flexDirection: 'row' }}
-    >
-      <img src={item.imageUrl} alt={item.name} />
-      <span>{item.name}</span>
-      <div>
-        <span onClick={onDecrement}>{'<'}</span>
-        <span>{item.quantity}</span>
-        <span onClick={onIncrement}>{'>'}</span>
+    <div className={styles['checkout-item-container']}>
+      <div className={styles['image-container']}>
+        <img src={item.imageUrl} alt={item.name} />
       </div>
-      <span>{item.price}</span>
-      <span onClick={onRemove}>X</span>
+      <span className={styles.name}>{item.name}</span>
+      <span className={styles.quantity}>
+        <div className={styles.arrow} onClick={onDecrement}>
+          &#10094;
+        </div>
+        <span className={styles.value}>{item.quantity}</span>
+        <div className={styles.arrow} onClick={onIncrement}>
+          &#10095;
+        </div>
+      </span>
+      <span className={styles.price}>{item.price}</span>
+      <div className={styles['remove-button']} onClick={onRemove}>
+        &#10005;
+      </div>
     </div>
   );
 };

@@ -11,7 +11,9 @@ export const CartItem = (props: CartItemProps) => {
         <span className={styles.price}>{`${quantity} x $${price.toFixed(
           2
         )}`}</span>
-        <span className={styles.remove}>remove</span>
+        <span className={styles.remove} onClick={props.onRemove}>
+          remove
+        </span>
       </div>
     </div>
   );
