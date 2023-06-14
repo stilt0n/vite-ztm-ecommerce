@@ -4,6 +4,8 @@ import { ReactNode } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = () => {};
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const noopDispatch = <T>(t: T) => {};
 
 export interface ChildProps {
   children?: ReactNode;

@@ -6,8 +6,8 @@ export const Shop = () => {
   const { currentInventory } = useInventoryContext();
   return (
     <div className={styles['products-container']}>
-      {currentInventory.map(({ id, ...product }) => (
-        <ProductCard key={id} product={product} />
+      {currentInventory.map((product) => (
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );

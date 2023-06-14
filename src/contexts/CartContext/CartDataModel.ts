@@ -4,25 +4,34 @@ import { CartData } from './types';
 export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
   private cartData: CartData = {};
   private ids: number[] = [];
+  private cartItemCount = 0;
 
   public constructor(items?: InventoryItem[]) {
     const initList = items ?? [];
     for (const item of initList) {
-      this.addItemToCart(item);
+      this.addItem(item);
     }
   }
 
-  public addItemToCart(item: InventoryItem) {
+  public addItem(item: InventoryItem) {
     if (this.cartData[item.id]) {
       this.cartData[item.id].quantity += 1;
     } else {
       this.cartData[item.id] = { ...item, quantity: 1 };
       this.ids.push(item.id);
     }
+    this.cartItemCount += 1;
   }
 
-  public get(id: number) {
-    return this.cartData[id];
+  public getItemCount() {
+    return this.cartItemCount;
+  }
+
+  public removeItem(id: number) {
+    if (!this.cartData[id]) return;
+    this.cartItemCount -= this.cartData[id].quantity;
+    delete this.cartData[id];
+    this.ids.splice(this.ids.indexOf(id), 1);
   }
 
   public decrementItem(id: number) {
@@ -30,8 +39,9 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
       this.cartData[id].quantity -= 1;
       if (this.cartData[id].quantity === 0) {
         delete this.cartData[id];
-        this.ids.splice(this.ids.indexOf(id));
+        this.ids.splice(this.ids.indexOf(id), 1);
       }
+      this.cartItemCount -= 1;
       return true;
     }
     return false;

@@ -1,5 +1,11 @@
 import { createContext, useState, useContext } from 'react';
-import { ChildProps, InventoryItem, noop } from '../../utils/typeUtil';
+import {
+  ChildProps,
+  InventoryItem,
+  InventoryItemWithQuantity,
+  noop,
+  noopDispatch,
+} from '../../utils/typeUtil';
 import { CartContextState } from './types';
 import { CartDataModel } from './CartDataModel';
 
@@ -10,17 +16,36 @@ export const CartContext = createContext<CartContextState>({
   setIsCartOpen: noop,
   cartItems: [],
   addItemToCart: noop,
+  removeItemFromCart: noopDispatch,
+  itemCount: 0,
 });
 
 export const CartProvider = ({ children }: ChildProps) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const addItemToCart = (item: InventoryItem) => cart.addItemToCart(item);
+  const [cartItems, setCartItems] = useState<InventoryItemWithQuantity[]>([]);
+  const [itemCount, setItemCount] = useState(0);
+
+  const addItemToCart = (item: InventoryItem) => {
+    cart.addItem(item);
+    setCartItems(Array.from(cart));
+    setItemCount(cart.getItemCount());
+  };
+
+  const removeItemFromCart = (id: number) => {
+    cart.removeItem(id);
+    setCartItems(Array.from(cart));
+    setItemCount(cart.getItemCount());
+  };
+
   const value = {
     isCartOpen,
     setIsCartOpen,
-    cartItems: [...cart],
+    cartItems,
     addItemToCart,
+    removeItemFromCart,
+    itemCount,
   };
+
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 

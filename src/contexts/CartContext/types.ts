@@ -8,6 +8,8 @@ export interface CartData {
 export interface CartContextState {
   isCartOpen: boolean;
   setIsCartOpen: Dispatch<SetStateAction<boolean>>;
-  cartItems: CartData;
+  cartItems: InventoryItemWithQuantity[];
   addItemToCart: (item: InventoryItem) => void;
+  removeItemFromCart: (id: number) => void;
+  itemCount: number;
 }
