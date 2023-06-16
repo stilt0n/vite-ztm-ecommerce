@@ -1,6 +1,6 @@
-import { CategoryItemProps } from "../CategoryItem";
+import { DirectoryItemProps } from '../DirectoryItem';
 
-export interface CategoryListItem extends CategoryItemProps {
+export interface CategoryListItem extends DirectoryItemProps {
   id: number;
 }
 

@@ -1,10 +1,10 @@
-import { CategoryItemProps } from './types';
-import styles from './CategoryItem.module.scss';
+import { DirectoryItemProps } from './types';
+import styles from './DirectoryItem.module.scss';
 import { Link } from 'react-router-dom';
 
-export const CategoryItem = (props: CategoryItemProps) => (
+export const DirectoryItem = (props: DirectoryItemProps) => (
   <Link
-    className={styles['category-container']}
+    className={styles['directory-item-container']}
     to={`/shop/${props.title.toLowerCase()}`}
   >
     <div
@@ -13,7 +13,7 @@ export const CategoryItem = (props: CategoryItemProps) => (
         backgroundImage: `url(${props.imgUrl})`,
       }}
     />
-    <div className={styles['category-body-container']}>
+    <div className={styles['body']}>
       <h2>{props.title}</h2>
       <p>Shop Now</p>
     </div>

@@ -10,7 +10,7 @@ export const CategoryPreview = (props: CategoryPreviewProps) => {
         <Link
           title={`See more ${props.title}`}
           className={styles.title}
-          to={`/${props.title}`}
+          to={`/shop/${props.title}`}
         >
           {props.title.toUpperCase()}
         </Link>
