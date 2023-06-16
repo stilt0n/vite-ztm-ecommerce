@@ -13,7 +13,11 @@ export const Navigation = () => {
   return (
     <>
       <div className={styles['navigation']}>
-        <Link className={styles['logo-container']} to="/">
+        <Link
+          className={styles['logo-container']}
+          to="/"
+          title="Back to home page"
+        >
           <CrwnLogo className={styles['logo']} />
         </Link>
         <div className={styles['nav-links-container']}>
