@@ -21,3 +21,12 @@ export interface InventoryItem {
 export interface InventoryItemWithQuantity extends InventoryItem {
   quantity: number;
 }
+
+export interface InventoryDoc {
+  title: string;
+  items: InventoryItem[];
+}
+
+export interface InventoryCategoryMap {
+  [key: string]: InventoryItem[];
+}

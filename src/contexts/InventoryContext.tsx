@@ -1,19 +1,24 @@
-import { createContext, useContext, useState } from 'react';
-import { ChildProps, InventoryItem } from '../utils/typeUtil';
-import INVENTORY from '../json-data/shop-data.json';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { ChildProps, InventoryCategoryMap } from '../utils/typeUtil';
+import { loadCategoriesAndDocuments } from '../utils/firebase';
 
 export interface InventoryContextState {
-  currentInventory: InventoryItem[];
+  currentInventory: InventoryCategoryMap;
 }
 
 export const InventoryContext = createContext<InventoryContextState>({
-  currentInventory: [],
+  currentInventory: {},
 });
 
-const defaultData = INVENTORY as InventoryItem[];
-
 export const InventoryProvider = ({ children }: ChildProps) => {
-  const [currentInventory] = useState(defaultData);
+  const [currentInventory, setCurrentInventory] = useState({});
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoryMap = await loadCategoriesAndDocuments();
+      setCurrentInventory(categoryMap);
+    };
+    getCategoriesMap();
+  }, []);
   return (
     <InventoryContext.Provider value={{ currentInventory }}>
       {children}
