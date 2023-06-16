@@ -30,3 +30,10 @@ export interface InventoryDoc {
 export interface InventoryCategoryMap {
   [key: string]: InventoryItem[];
 }
+
+export type InventoryCategory =
+  | 'hats'
+  | 'sneakers'
+  | 'jackets'
+  | 'mens'
+  | 'womens';

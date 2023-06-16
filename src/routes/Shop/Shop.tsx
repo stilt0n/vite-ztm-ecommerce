@@ -1,22 +1,13 @@
-import { useInventoryContext } from 'src/contexts/InventoryContext';
-import { ProductCard } from '../../components/ProductCard';
+import { Routes, Route } from 'react-router-dom';
+import { Categories } from '../Categories';
+import { Category } from '../Category';
 import styles from './Shop.module.scss';
-import { Fragment } from 'react';
 
 export const Shop = () => {
-  const { currentInventory } = useInventoryContext();
   return (
-    <>
-      {Object.entries(currentInventory).map(([title, items]) => (
-        <Fragment key={title}>
-          <h2>{title.toUpperCase()}</h2>
-          <div className={styles['products-container']}>
-            {items.map((item) => (
-              <ProductCard key={item.id} product={item} />
-            ))}
-          </div>
-        </Fragment>
-      ))}
-    </>
+    <Routes>
+      <Route index element={<Categories />} />
+      <Route path=":category" element={<Category />} />
+    </Routes>
   );
 };
