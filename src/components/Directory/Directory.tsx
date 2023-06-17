@@ -1,12 +1,12 @@
 import { DirectoryItem } from '../DirectoryItem';
 import { categoriesList } from './categories';
 import { DirectoryProps } from './types';
-import styles from './Directory.module.scss';
+import { DirectoryContainer } from './Directory.styles';
 
 export const Directory = ({ categories = categoriesList }: DirectoryProps) => (
-  <div className={styles['directory-container']}>
+  <DirectoryContainer>
     {categories.map(({ id, ...itemProps }) => (
       <DirectoryItem key={id} {...itemProps} />
     ))}
-  </div>
+  </DirectoryContainer>
 );

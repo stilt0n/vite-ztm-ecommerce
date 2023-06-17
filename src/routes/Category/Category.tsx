@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useInventoryContext } from '../../contexts/InventoryContext';
 import { CategoryParams } from './types';
 import { ProductCard } from 'src/components/ProductCard';
-import styles from './Category.module.scss';
+import { CategoryContainer } from './Category.styles';
 
 export const Category = () => {
   const { category } = useParams<Partial<CategoryParams>>();
@@ -13,10 +13,10 @@ export const Category = () => {
     [category, currentInventory]
   );
   return (
-    <div className={styles['category-container']}>
+    <CategoryContainer>
       {products?.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
-    </div>
+    </CategoryContainer>
   );
 };

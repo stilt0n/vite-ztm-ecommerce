@@ -1,21 +1,16 @@
 import { DirectoryItemProps } from './types';
-import styles from './DirectoryItem.module.scss';
-import { Link } from 'react-router-dom';
+import {
+  BackgroundImage,
+  Body,
+  DirectoryItemContainerLink,
+} from './DirectoryItem.styles';
 
 export const DirectoryItem = (props: DirectoryItemProps) => (
-  <Link
-    className={styles['directory-item-container']}
-    to={`/shop/${props.title.toLowerCase()}`}
-  >
-    <div
-      className={styles['background-image']}
-      style={{
-        backgroundImage: `url(${props.imgUrl})`,
-      }}
-    />
-    <div className={styles['body']}>
+  <DirectoryItemContainerLink to={`/shop/${props.title.toLowerCase()}`}>
+    <BackgroundImage imageUrl={props.imgUrl} />
+    <Body>
       <h2>{props.title}</h2>
       <p>Shop Now</p>
-    </div>
-  </Link>
+    </Body>
+  </DirectoryItemContainerLink>
 );
