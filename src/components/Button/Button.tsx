@@ -1,10 +1,14 @@
-import { ButtonProps } from './types';
-import styles from './Button.module.scss';
+import { ButtonProps, StyledButton } from './types';
+import {
+  BaseButton,
+  GoogleSignInButton,
+  InvertedButton,
+} from './Button.styles';
 
-const styleMap: { [key: string]: string } = {
-  default: '',
-  inverted: styles['inverted'],
-  google: styles['google-sign-in'],
+const styleMap: { [key: string]: StyledButton } = {
+  default: BaseButton,
+  inverted: InvertedButton,
+  google: GoogleSignInButton,
 };
 
 export const Button = ({
@@ -12,12 +16,6 @@ export const Button = ({
   children,
   ...htmlButtonProps
 }: ButtonProps) => {
-  const buttonClassName = `${styles['button-container']} ${
-    styleMap[buttonType ?? 'default']
-  }`;
-  return (
-    <button className={buttonClassName} {...htmlButtonProps}>
-      {children}
-    </button>
-  );
+  const Button = styleMap[buttonType ?? 'default'];
+  return <Button {...htmlButtonProps}>{children}</Button>;
 };

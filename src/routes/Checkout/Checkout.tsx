@@ -1,24 +1,26 @@
 import { CheckoutRow } from '../../components/CheckoutRow';
 import { useCartContext } from '../../contexts/CartContext';
-import styles from './Checkout.module.scss';
+import {
+  CheckoutContainer,
+  CheckoutHeader,
+  HeaderBlock,
+  Total,
+} from './Checkout.styles';
 
 const HeaderRow = () => (
-  <div className={styles['checkout-header']}>
+  <CheckoutHeader>
     {['Product', 'Description', 'Quantity', 'Price', 'Remove'].map(
       (rowTitle) => (
-        <div className={styles['header-block']}>
+        <HeaderBlock>
           <span>{rowTitle}</span>
-        </div>
+        </HeaderBlock>
       )
     )}
-  </div>
+  </CheckoutHeader>
 );
 
 const FooterRow = ({ subtotal = 0 }) => (
-  <span
-    className={styles['total']}
-    style={{ textAlign: 'center' }}
-  >{`Total: $${subtotal.toFixed(2)}`}</span>
+  <Total>{`Total: $${subtotal.toFixed(2)}`}</Total>
 );
 
 export const Checkout = () => {
@@ -42,7 +44,7 @@ export const Checkout = () => {
       }
     };
   return (
-    <div className={styles['checkout-container']}>
+    <CheckoutContainer>
       <HeaderRow />
       {cartItems.map((item) => (
         <CheckoutRow
@@ -57,6 +59,6 @@ export const Checkout = () => {
           0
         )}
       />
-    </div>
+    </CheckoutContainer>
   );
 };

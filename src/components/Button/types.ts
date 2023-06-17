@@ -1,14 +1,15 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
 
 export type ButtonType = 'google' | 'inverted' | 'default';
 
-export interface ButtonProps
-  extends Omit<
-    DetailedHTMLProps<
-      ButtonHTMLAttributes<HTMLButtonElement>,
-      HTMLButtonElement
-    >,
-    'className'
-  > {
+type BaseButtonProps = Omit<
+  DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
+  'className'
+>;
+
+// I generally try to avoid FC but styled-components doesn't make typing easy
+export type StyledButton = FC<BaseButtonProps>;
+
+export interface ButtonProps extends BaseButtonProps {
   buttonType?: ButtonType;
 }
