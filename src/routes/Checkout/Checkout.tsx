@@ -27,7 +27,7 @@ const FooterRow = ({ subtotal = 0 }) => (
 );
 
 export const Checkout = () => {
-  const { cartItems, cartDispatch } = useCartContext();
+  const { cartItems, cartTotal, cartDispatch } = useCartContext();
   const createItemChangeHandler =
     (id: number) =>
     (type: Exclude<CartReducerActionType, 'ADD_ITEM' | 'TOGGLE_IS_OPEN'>) => {
@@ -43,12 +43,7 @@ export const Checkout = () => {
           onItemChange={createItemChangeHandler(item.id)}
         />
       ))}
-      <FooterRow
-        subtotal={cartItems.reduce(
-          (sum, { price, quantity }) => sum + price * quantity,
-          0
-        )}
-      />
+      <FooterRow subtotal={cartTotal} />
     </CheckoutContainer>
   );
 };

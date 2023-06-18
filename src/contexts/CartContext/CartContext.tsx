@@ -7,6 +7,7 @@ const getNextCartState = (cart: CartDataModel) => {
   return {
     cart,
     cartItems: Array.from(cart),
+    cartTotal: cart.getTotal(),
     itemCount: cart.getItemCount(),
   };
 };
@@ -15,6 +16,7 @@ const initialCartState = {
   isCartOpen: false,
   cartItems: [],
   itemCount: 0,
+  cartTotal: 0,
   cart: new CartDataModel(),
 };
 
@@ -45,16 +47,15 @@ const cartReducer = (state: CartReducerState, action: CartReducerAction) => {
 };
 
 export const CartProvider = ({ children }: ChildProps) => {
-  const [{ isCartOpen, cartItems, itemCount }, cartDispatch] = useReducer(
-    cartReducer,
-    initialCartState
-  );
+  const [{ isCartOpen, cartItems, itemCount, cartTotal }, cartDispatch] =
+    useReducer(cartReducer, initialCartState);
 
   const value = {
     isCartOpen,
     cartItems,
     itemCount,
     cartDispatch,
+    cartTotal,
   };
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

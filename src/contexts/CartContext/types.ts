@@ -10,6 +10,7 @@ export interface CartContextState {
   cartItems: InventoryItemWithQuantity[];
   cartDispatch: Dispatch<CartReducerAction>;
   itemCount: number;
+  cartTotal: number;
 }
 
 export type CartReducerActionType =

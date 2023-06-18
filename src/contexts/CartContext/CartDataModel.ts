@@ -4,18 +4,18 @@ import { CartContextState, CartData } from './types';
 // this is pretty obviously overkill, but I've always wanted to implement an iterable
 export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
   private cartData: CartData = {};
-  private ids: number[] = [];
   private cartItemCount = 0;
+  private cartTotal = 0;
 
   public constructor(initData?: {
     cartData: CartData;
-    ids: number[];
     cartItemCount: number;
+    cartTotal: number;
   }) {
     if (initData) {
       this.cartData = initData.cartData;
-      this.ids = initData.ids;
       this.cartItemCount = initData.cartItemCount;
+      this.cartTotal = initData.cartTotal;
     }
   }
 
@@ -25,8 +25,8 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
   public copy() {
     return new CartDataModel({
       cartData: structuredClone(this.cartData),
-      ids: [...this.ids],
       cartItemCount: this.cartItemCount,
+      cartTotal: this.cartTotal,
     });
   }
 
@@ -35,39 +35,43 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
       this.cartData[item.id].quantity += 1;
     } else {
       this.cartData[item.id] = { ...item, quantity: 1 };
-      this.ids.push(item.id);
     }
     this.cartItemCount += 1;
+    this.cartTotal += item.price;
   }
 
   public getItemCount() {
     return this.cartItemCount;
   }
 
+  public getTotal() {
+    return this.cartTotal;
+  }
+
   public removeItem(id: number) {
     if (!this.cartData[id]) return;
-    this.cartItemCount -= this.cartData[id].quantity;
+    const { quantity, price } = this.cartData[id];
+    this.cartItemCount -= quantity;
+    this.cartTotal -= price * quantity;
     delete this.cartData[id];
-    this.ids.splice(this.ids.indexOf(id), 1);
   }
 
   public decrementItem(id: number) {
     if (this.cartData[id]) {
       this.cartData[id].quantity -= 1;
+      this.cartTotal -= this.cartData[id].price;
       if (this.cartData[id].quantity === 0) {
         delete this.cartData[id];
-        this.ids.splice(this.ids.indexOf(id), 1);
       }
       this.cartItemCount -= 1;
-      return true;
     }
-    return false;
   }
 
   public incrementItem(id: number) {
     if (this.cartData[id]) {
       this.cartData[id].quantity += 1;
       this.cartItemCount += 1;
+      this.cartTotal += this.cartData[id].price;
       return;
     }
     throw new Error(
@@ -77,8 +81,9 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
 
   public *[Symbol.iterator]() {
     let counter = 0;
-    while (counter < this.ids.length) {
-      yield this.cartData[this.ids[counter]];
+    const ids = Object.keys(this.cartData).map(Number);
+    while (counter < ids.length) {
+      yield this.cartData[ids[counter]];
       counter++;
     }
   }
@@ -86,8 +91,9 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
 
 /**
  * @internal
- * Allows the reducer to keep track of the cart without exposing it extenrally.
- * This is a bit of a hack to allow this class to compatible with useReducer's pure function requirement.
+ * Allows the reducer to keep track of the cart without exposing it externally.
+ * @remarks
+ * This is a bit of a hack to allow this class to be compatible with useReducer's pure function requirement.
  */
 export interface CartReducerState
   extends Omit<CartContextState, 'cartDispatch'> {
