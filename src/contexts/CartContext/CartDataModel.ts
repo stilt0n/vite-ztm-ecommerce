@@ -1,16 +1,33 @@
 import { InventoryItemWithQuantity, InventoryItem } from '../../utils/typeUtil';
-import { CartData } from './types';
+import { CartContextState, CartData } from './types';
+
 // this is pretty obviously overkill, but I've always wanted to implement an iterable
 export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
   private cartData: CartData = {};
   private ids: number[] = [];
   private cartItemCount = 0;
 
-  public constructor(items?: InventoryItem[]) {
-    const initList = items ?? [];
-    for (const item of initList) {
-      this.addItem(item);
+  public constructor(initData?: {
+    cartData: CartData;
+    ids: number[];
+    cartItemCount: number;
+  }) {
+    if (initData) {
+      this.cartData = initData.cartData;
+      this.ids = initData.ids;
+      this.cartItemCount = initData.cartItemCount;
     }
+  }
+
+  /**
+   * @returns a deep copy of the current CartDataModel
+   */
+  public copy() {
+    return new CartDataModel({
+      cartData: structuredClone(this.cartData),
+      ids: [...this.ids],
+      cartItemCount: this.cartItemCount,
+    });
   }
 
   public addItem(item: InventoryItem) {
@@ -65,4 +82,14 @@ export class CartDataModel implements Iterable<InventoryItemWithQuantity> {
       counter++;
     }
   }
+}
+
+/**
+ * @internal
+ * Allows the reducer to keep track of the cart without exposing it extenrally.
+ * This is a bit of a hack to allow this class to compatible with useReducer's pure function requirement.
+ */
+export interface CartReducerState
+  extends Omit<CartContextState, 'cartDispatch'> {
+  cart: CartDataModel;
 }

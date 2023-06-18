@@ -1,5 +1,8 @@
 import { CheckoutRow } from '../../components/CheckoutRow';
-import { useCartContext } from '../../contexts/CartContext';
+import {
+  CartReducerActionType,
+  useCartContext,
+} from '../../contexts/CartContext';
 import {
   CheckoutContainer,
   CheckoutHeader,
@@ -11,7 +14,7 @@ const HeaderRow = () => (
   <CheckoutHeader>
     {['Product', 'Description', 'Quantity', 'Price', 'Remove'].map(
       (rowTitle) => (
-        <HeaderBlock>
+        <HeaderBlock key={rowTitle}>
           <span>{rowTitle}</span>
         </HeaderBlock>
       )
@@ -24,24 +27,11 @@ const FooterRow = ({ subtotal = 0 }) => (
 );
 
 export const Checkout = () => {
-  const {
-    cartItems,
-    incrementItemInCart,
-    removeItemFromCart,
-    decrementItemInCart,
-  } = useCartContext();
+  const { cartItems, cartDispatch } = useCartContext();
   const createItemChangeHandler =
-    (id: number) => (action: 'increment' | 'decrement' | 'remove') => {
-      switch (action) {
-        case 'increment':
-          incrementItemInCart(id);
-          break;
-        case 'decrement':
-          decrementItemInCart(id);
-          break;
-        case 'remove':
-          removeItemFromCart(id);
-      }
+    (id: number) =>
+    (type: Exclude<CartReducerActionType, 'ADD_ITEM' | 'TOGGLE_IS_OPEN'>) => {
+      cartDispatch({ type, payload: id });
     };
   return (
     <CheckoutContainer>

@@ -10,11 +10,12 @@ import {
 } from './CheckoutRow.styles';
 
 export const CheckoutRow = ({ onItemChange, item }: CheckoutRowProps) => {
-  const onIncrement = () => onItemChange('increment');
+  const onIncrement = () => onItemChange('INCREMENT_ITEM');
   const onDecrement = () => {
-    if (item.quantity > 1) onItemChange('decrement');
+    if (item.quantity > 1) onItemChange('DECREMENT_ITEM');
+    else onItemChange('REMOVE_ITEM');
   };
-  const onRemove = () => onItemChange('remove');
+  const onRemove = () => onItemChange('REMOVE_ITEM');
   return (
     <CheckoutItemContainer>
       <ImageContainer>

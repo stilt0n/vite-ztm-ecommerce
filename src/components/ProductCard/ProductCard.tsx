@@ -1,7 +1,6 @@
 import { ProductCardProps } from './types';
 import { Button } from '../Button';
 import { useCartContext } from '../../contexts/CartContext';
-import styles from './ProductCard.module.scss';
 import {
   Footer,
   Name,
@@ -11,8 +10,9 @@ import {
 
 export const ProductCard = (props: ProductCardProps) => {
   const { name, price, imageUrl } = props.product;
-  const { addItemToCart } = useCartContext();
-  const addProductToCart = () => addItemToCart(props.product);
+  const { cartDispatch } = useCartContext();
+  const addProductToCart = () =>
+    cartDispatch({ type: 'ADD_ITEM', payload: props.product });
   return (
     <ProductCardContainer>
       <img src={imageUrl} alt={name} />
