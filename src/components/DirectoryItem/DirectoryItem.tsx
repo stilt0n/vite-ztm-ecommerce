@@ -7,7 +7,7 @@ import {
 
 export const DirectoryItem = (props: DirectoryItemProps) => (
   <DirectoryItemContainerLink to={`/shop/${props.title.toLowerCase()}`}>
-    <BackgroundImage imageUrl={props.imgUrl} />
+    <BackgroundImage imageurl={props.imgUrl} />
     <Body>
       <h2>{props.title}</h2>
       <p>Shop Now</p>

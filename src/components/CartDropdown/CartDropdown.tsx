@@ -9,7 +9,7 @@ import {
 } from './CartDropdown.styles';
 
 export const CartDropdown = () => {
-  const { cartItems, removeItemFromCart } = useCartContext();
+  const { cartItems, cartDispatch } = useCartContext();
   const navigate = useNavigate();
   const navigateToCheckout = () => navigate('/checkout');
   return (
@@ -20,7 +20,9 @@ export const CartDropdown = () => {
             <CartItem
               key={item.id}
               item={item}
-              onRemove={() => removeItemFromCart(item.id)}
+              onRemove={() =>
+                cartDispatch({ type: 'REMOVE_ITEM', payload: item.id })
+              }
             />
           ))
         ) : (
