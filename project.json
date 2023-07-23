@@ -72,6 +72,43 @@
       "options": {
         "buildTarget": "ecom:build"
       }
+    },
+    "storybook": {
+      "executor": "@nx/storybook:storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "./.storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@nx/storybook:build",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/ecom",
+        "configDir": "./.storybook"
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "ecom:build-storybook",
+        "staticFilePath": "dist/storybook/ecom"
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "ecom:build-storybook:ci"
+        }
+      }
     }
   },
   "tags": []
